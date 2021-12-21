@@ -1,16 +1,17 @@
-from os import stat
-from telegram.bot import Bot
-from telegram.ext.commandhandler import CommandHandler
-from telegram.user import User
-from telegram.ext import Updater
+
+from telegram.ext import Updater, CallbackContext, CommandHandler
+from telegram.update import Update
+import settings
+
+updater = Updater(token = settings.TELEGRAM_TOKEN)
 
 
-updater = Updater(token='5000585937:AAEzHaMUeFyDYggKfKJ0XP0lAIF9GF_yrmc')
+def start(update: Update, context: CallbackContext):
+  update.message.reply_text('Salom')
+  context.bot.send_message(chat_id = update.message.chat_id, text = 'Yana bir bor salom')
 
-
-def start(update, context):
-  print(update)
 dispatcher = updater.dispatcher
 dispatcher.add_handler(CommandHandler('start', start))
+
 updater.start_polling()
 updater.idle()
